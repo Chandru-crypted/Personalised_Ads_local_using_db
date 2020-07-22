@@ -1,0 +1,7 @@
+{% extends "layout.html" %}	
+{% block content %}
+<h1> Selecting the no of ads to display </h1>
+	<form action = "/ads", method = "POST">
+	<label for="noof_ads">No of ads : </label><br>
+	<input type="number" id="noof_ads" name="noof_ads" required><br>
+{% endblock content %}

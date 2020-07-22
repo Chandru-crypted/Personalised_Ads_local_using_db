@@ -47,6 +47,7 @@ def get_the_last_row(table_name,db_loc):
 		data_tuple = []
 		for row in curser:
 			data_tuple = list(row)
+		conn.close()
 		prev_dict_col_values = {}
 		i = 0
 		for col in names:
@@ -61,17 +62,17 @@ def get_the_last_row(table_name,db_loc):
 		conn = sqlite3.connect(db_loc)
 		curser = conn.execute(command)
 		names = [description[0] for description in curser.description]
-
 		i = 0
 		for col in names:
 			prev_dict_col_values[col] = 0
 			i += 1
+		conn.close()
 		return(prev_dict_col_values)
 
 
 def run_compare():
 	print("Running the compare --")
-	db_loc = r'C:\Users\chand\Documents\P\Projects\Locally_personalised_ads\db\payment_db.db'
+	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
 	table_name_1 = "tab1"
 	table_name_2 = "tab2"
 	table_name_3 = "tab3"
@@ -86,10 +87,13 @@ def run_compare():
 
 	compare= {}
 	for col in dict_col_and_values_tab1.keys():
-		if dict_col_and_values_tab1[col] >= dict_col_and_values_tab2[col]:
-			compare[col] = False
+		if dict_col_and_values_tab1[col] < dict_col_and_values_tab2[col]:
+			percent = dict_col_and_values_tab2[col] - dict_col_and_values_tab1[col]
+			percent = percent / dict_col_and_values_tab2[col]
+			percent = percent * 100
+			compare[col] = percent
 		else:
-			compare[col] = True 
+			compare[col] = 0
 	
 	print("The dict used for creating data in tab3",compare)
 
@@ -97,6 +101,10 @@ def run_compare():
 	command += ";"
 	executing_command(command, db_loc)
 
+	command = "DELETE FROM sqlite_sequence WHERE name = \'{}\' ;".format(table_name_3)
+	executing_command(command, db_loc)
+
+	print(compare)
 	command = create_insert_command(table_name_3, compare)
 	executing_command(command, db_loc)
 

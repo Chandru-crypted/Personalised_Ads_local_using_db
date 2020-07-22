@@ -1,0 +1,7 @@
+{% extends "layout.html" %}	
+{% block content %}
+<h1> Updated Please see what you have updated </h1>
+{% for key, value  in posts.items() %}
+	<p>{{ key }} : {{ value }}</p>
+{% endfor %}
+{% endblock content %}

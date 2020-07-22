@@ -1,0 +1,14 @@
+{% extends "layout.html" %}	
+{% block content %}
+	<h1> Update your spendings : </h1>
+	<form action = "/update", method = "POST">
+	  <label for="DATE">Date : </label><br>
+	  <input type="date" id="DATE" name="DATE" required><br>
+	  {% for col in posts %}
+		  <label for=  {{ col }}> {{ col }} : </label><br>
+		  <input type="number" id= {{ col }} name= {{ col }} required><br>
+	  {% endfor %}
+	  <br>
+	  <input type="submit" value="Submit">
+	</form>
+{% endblock content %}

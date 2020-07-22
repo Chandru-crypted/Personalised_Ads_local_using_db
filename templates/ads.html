@@ -1,0 +1,16 @@
+{% extends "layout.html" %}	
+{% block content %}
+<style>
+img {
+  width: 30%;
+  height: 30%
+}
+</style>
+<h1> Ads page </h1>
+	{% for a in posts %}	
+		{% for i in range(1, a[1] + 1) %}
+			<img src="../static/{{ a[0] }}/{{ i }}.jpg" alt="{{a[0]}} {{ i }}" >
+			<p> {{ a[0] }} : {{ i }}</p>
+		{% endfor %}
+	{% endfor %}
+{% endblock content %}

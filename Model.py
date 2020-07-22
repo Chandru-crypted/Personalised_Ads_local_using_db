@@ -62,6 +62,8 @@ def selecting_data_for_model(db_loc, table_name, dict_col_and_types):
 		for row in curser:
 			data_tuple.append(row)
 		conn.close()
+		print(data_tuple)
+		print(dict_col_and_types.keys())
 		df = pd.DataFrame(data_tuple, columns= list(dict_col_and_types.keys()))
 		df.drop("ID", axis = 1, inplace = True) 
 		df['MONTH'] = pd.to_datetime(df['MONTH'], format = "%Y-%m")
@@ -112,20 +114,24 @@ def create_insert_command(table_name, dict_col_and_values):
 	return command
 
 
-def run_model():
-
+def run_model(dict_col_and_types):
+	print("IN the model", dict_col_and_types)
 	print("Running the model -- ")
-	db_loc = r'C:\Users\chand\Documents\P\Projects\Locally_personalised_ads\db\payment_db.db'
+	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
 	table_name_1 = "tab1"
-	dict_col_and_types = {	"ID" : "INT PRIMARY KEY AUTOINCREMENT",
-							"MONTH" : "TEXT NOT NULL",  #can we have seprate columns as years and month
-							"FOOD" : "REAL NOT NULL", 
-							"FUEL" : "REAL NOT NULL"} 
+	# dict_col_and_types = {	"ID" : "INT PRIMARY KEY AUTOINCREMENT",
+	# 						"MONTH" : "TEXT NOT NULL",  #can we have seprate columns as years and month
+	# 						"FOOD" : "REAL NOT NULL", 
+	# 						"FUEL" : "REAL NOT NULL"} 
 	print("selecting the data for model -- ")
+	print(dict_col_and_types)
 	(df, max_P, max_Q) = selecting_data_for_model(db_loc, table_name_1, dict_col_and_types)
+	print("\n printing the df ")
+	print(df)
 	print("prediciting the next month -- ")
 	dict_col_and_predictions =  predict_next_month(df, max_P, max_Q)
-
+	print("\n printing the dict _0_0_0_")
+	print(dict_col_and_predictions)
 	table_name_2 = "tab2"
 
 	command = create_insert_command(table_name_2, dict_col_and_predictions)

@@ -13,6 +13,7 @@ from dateutil.relativedelta import relativedelta
 import calendar
 import Model
 import Compare
+import copy
 
 def checking_connection(db_loc):
 	#establishing a connection 
@@ -56,23 +57,28 @@ def checking_whether_it_is_end_of_month(day):
 	return (False)
 
 
-def run_updater(dict_col_values):
+def run_updater(dict):
+	# Like no problem here it doesnot depend on the number of categories make sure 
+	# you have date 
+	dict_col_values = copy.deepcopy(dict)
+
+	#I am making a deep copy
 	print("Running updater -- ")
-	db_loc = r'C:\Users\chand\Documents\P\Projects\Locally_personalised_ads\db\payment_db.db'
+	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
 	table_name_1 = "tab1"
 
 	# Getting the last row from the db
 	command = "SELECT * FROM {} ".format(table_name_1) 
 	command += "ORDER BY ID "
 	command += "DESC LIMIT 1 ;"
-	conn = sqlite3.connect(db_loc)
+	conn = sqlite3.connect(db_loc)  # opened the connection 
 	curser = conn.execute(command)
 	names = [description[0] for description in curser.description]
 	data_tuple = []
 	for row in curser:
 		data_tuple = list(row)
 	#print(data_tuple)
-
+	conn.close()  # closed the connection 
 	prev_dict_col_values = {}
 	i = 0
 	for col in names:
@@ -107,16 +113,36 @@ def run_updater(dict_col_values):
 	#print("in dict ", dict_col_values)
 
 	Compare.run_compare()
-
+	
 	#Checking whether it is last day of the month
 	if (checking_whether_it_is_end_of_month(day)):
-		Model.run_model()
+
+		table_name = "tab1"
+		command = "SELECT * FROM {} ".format(table_name) 
+		command += "ORDER BY ID "
+		command += "DESC LIMIT 1 ;"
+		conn = sqlite3.connect(db_loc)
+		curser = conn.execute(command)
+		names = [description[0] for description in curser.description]
+		data_tuple = []
+		for row in curser:
+			data_tuple = list(row)
+		conn.close()
+
+		prev_dict_col_values = {}
+		i = 0
+		for col in names:
+			prev_dict_col_values[col] = data_tuple[i]
+			i += 1
+
+		Model.run_model(prev_dict_col_values)
 
 
 if __name__ == "__main__":
-	dict_col_values = {"DATE" : "2018-12-31", 
-						"FOOD" : 100,
-						"FUEL" : 40
+	dict_col_values = {"DATE" : "2020-07-31", 
+						"FOOD" : 9100,
+						"FUEL" : 1200, 
+						"CLOTH" :1200
 					}	
 	run_updater(dict_col_values)
 
