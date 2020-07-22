@@ -1,0 +1,13 @@
+{% extends "layout.html" %}	
+{% block content %}
+	<h1> Update your spendings : </h1>
+	<form action = "/update", method = "POST">
+	  <label for="date">Date : </label><br>
+	  <input type="date" id="date" name="date" required><br>
+	  <label for="food"> Food: </label><br>
+	  <input type="number" id="food" name="food" required><br>
+	  <label for="fuel"> Fuel: </label><br>
+	  <input type="number" id="fuel" name="fuel" required><br><br>
+	  <input type="submit" value="Submit">
+	</form>
+{% endblock content %}

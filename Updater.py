@@ -13,6 +13,7 @@ from dateutil.relativedelta import relativedelta
 import calendar
 import Model
 import Compare
+import copy
 
 def checking_connection(db_loc):
 	#establishing a connection 
@@ -56,9 +57,12 @@ def checking_whether_it_is_end_of_month(day):
 	return (False)
 
 
-def run_updater(dict_col_values):
+def run_updater(dict):
+	
+	dict_col_values = copy.deepcopy(dict)
+	#I am making a deep copy
 	print("Running updater -- ")
-	db_loc = r'C:\Users\chand\Documents\P\Projects\Locally_personalised_ads\db\payment_db.db'
+	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
 	table_name_1 = "tab1"
 
 	# Getting the last row from the db
@@ -114,9 +118,9 @@ def run_updater(dict_col_values):
 
 
 if __name__ == "__main__":
-	dict_col_values = {"DATE" : "2018-12-31", 
-						"FOOD" : 100,
-						"FUEL" : 40
+	dict_col_values = {"DATE" : "2018-12-30", 
+						"FOOD" : 9100,
+						"FUEL" : 1200
 					}	
 	run_updater(dict_col_values)
 

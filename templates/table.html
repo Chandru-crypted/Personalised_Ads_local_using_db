@@ -1,0 +1,27 @@
+{% extends "layout.html" %} 
+{% block content %}
+<style>
+table, th, td {
+  border: 1px solid black;
+  padding : 15px;
+}
+</style>
+<h1>
+  Your spendings here monthwise ...
+</h1><br>
+
+<table style="width:100%">
+  <tr>
+    <th>Month</th>
+    <th>Food</th>
+    <th>Fuel</th>
+  </tr>
+  {% for post in posts%}
+    <tr>
+      <td>{{post.1}}</td>
+      <td>{{post.2}}</td>
+      <td>{{post.3}}</td>
+    </tr>
+  {% endfor %}
+</table>
+  {% endblock content %}
