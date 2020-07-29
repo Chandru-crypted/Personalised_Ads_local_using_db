@@ -1,4 +1,5 @@
 import sqlite3
+import os
 def checking_connection(db_loc):
 	#establishing a connection 
 	conn = sqlite3.connect(db_loc)
@@ -7,7 +8,7 @@ def checking_connection(db_loc):
 
 
 def run_sel(table_name_1):
-	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
+	db_loc = r'{}'.format(os.getcwd() + r'\db\payment_db.db')
 	#table_name_1 = "tab1"
 	command = "SELECT * FROM {} ".format(table_name_1)
 	command += "ORDER BY ID DESC"

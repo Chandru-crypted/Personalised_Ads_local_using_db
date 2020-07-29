@@ -1,4 +1,5 @@
 import sqlite3 
+import os
 
 def checking_connection(db_loc):
 	#establishing a connection 
@@ -72,7 +73,7 @@ def get_the_last_row(table_name,db_loc):
 
 def run_compare():
 	print("Running the compare --")
-	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
+	db_loc = r'{}'.format(os.getcwd() + r'\db\payment_db.db')
 	table_name_1 = "tab1"
 	table_name_2 = "tab2"
 	table_name_3 = "tab3"

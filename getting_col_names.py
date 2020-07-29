@@ -1,10 +1,11 @@
 import sqlite3
+import os
 
 def run_getting_col(table_name):
 	'''
 	Getting the column names from the sql database in the given table name
 	'''
-	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
+	db_loc = r'{}'.format(os.getcwd() + r'\db\payment_db.db')
 	table_name_1 = str(table_name)
 
 	# Getting the last row from the db

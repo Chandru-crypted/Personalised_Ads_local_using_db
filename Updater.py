@@ -14,6 +14,7 @@ import calendar
 import Model
 import Compare
 import copy
+import os
 
 def checking_connection(db_loc):
 	#establishing a connection 
@@ -64,7 +65,7 @@ def run_updater(dict):
 
 	#I am making a deep copy
 	print("Running updater -- ")
-	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
+	db_loc = r'{}'.format(os.getcwd() + r'\db\payment_db.db')
 	table_name_1 = "tab1"
 
 	# Getting the last row from the db

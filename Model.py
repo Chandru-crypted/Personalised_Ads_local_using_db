@@ -8,7 +8,7 @@ Requirements :
 '''
 
 
-#import
+import os
 import sqlite3  
 import pandas as pd 
 import pmdarima as pm
@@ -117,7 +117,7 @@ def create_insert_command(table_name, dict_col_and_values):
 def run_model(dict_col_and_types):
 	print("IN the model", dict_col_and_types)
 	print("Running the model -- ")
-	db_loc = r'C:\Users\chand\Documents\P\Projects\personalised_ads_with_flask\db\payment_db.db'
+	db_loc = r'{}'.format(os.getcwd() + r'\db\payment_db.db')
 	table_name_1 = "tab1"
 	# dict_col_and_types = {	"ID" : "INT PRIMARY KEY AUTOINCREMENT",
 	# 						"MONTH" : "TEXT NOT NULL",  #can we have seprate columns as years and month
